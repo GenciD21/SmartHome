@@ -6,9 +6,9 @@ from ultrasonic import get_distance
 from lighting import turn_on, turn_off
 CODE = input("Input Code: ")
 
-HOST = "smarthomedb.czsygqk84von.us-east-2.rds.amazonaws.com"
+HOST = ""
 USER = "admin"
-PASSWORD="Ulqini77"
+PASSWORD=""
 DATABASE="interface"
 
 connection = mysql.connector.connect(
