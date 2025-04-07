@@ -1,0 +1,55 @@
+import mysql.connector
+from lcd_interface import write_to_lcd
+import update_queue
+import time
+from ultrasonic import get_distance
+from lighting import turn_on, turn_off
+CODE = input("Input Code: ")
+
+HOST = "smarthomedb.czsygqk84von.us-east-2.rds.amazonaws.com"
+USER = "admin"
+PASSWORD="Ulqini77"
+DATABASE="interface"
+
+connection = mysql.connector.connect(
+        host=HOST,
+        user=USER,
+        password=PASSWORD,
+        database=DATABASE,
+        autocommit=True
+    )
+
+if connection.is_connected():
+   print("Connect to database")
+
+new_cursor = connection.cursor(buffered=True)
+new_cursor.execute(f"SELECT * FROM middldeman WHERE code = {CODE}")
+initial_data = new_cursor.fetchall()[0]
+
+data_start = update_queue.wait_for_update(CODE, initial_data)
+brightness = data_start[1]
+ultrasonic_distance = data_start[2]
+toggle = data_start[3]
+light_toggle = False
+data = update_queue.wait_for_update(CODE, data_start)
+while True:
+      time.sleep(1)
+      toggle = data[3]
+      data = update_queue.wait_for_update(CODE, data)
+      print(data[3])
+      if data_start != data:
+         brightness = data[1]
+         ultrasonic_distance = data[2]
+      if toggle == 1:
+         turn_on()
+         if ultrasonic_distance != 0:
+          distance = get_distance()
+          
+          if distance <= ultrasonic_distance:
+            light_toggle = True
+          else:
+            light_toggle = False
+      if toggle == 0:
+         turn_off()
+         print("break")
+
