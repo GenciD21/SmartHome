@@ -2,25 +2,7 @@
 import RPi.GPIO as GPIO
 import time
 from lcd_interface import write_and_shift, get_x, get_y, lcd_clear, write_to_lcd
-# these GPIO pins are connected to the keypad
-# change these according to your connections!
 
-# Initialize the GPIO pins
-
-#GPIO.setwarnings(False)
-#GPIO.setmode(GPIO.BCM)
-
-#GPIO.setup(L1, GPIO.OUT)
-#GPIO.setup(L2, GPIO.OUT)
-#GPIO.setup(L3, GPIO.OUT)
-#GPIO.setup(L4, GPIO.OUT)
-
-# Make sure to configure the input pins to use the internal pull-down resistors
-
-#GPIO.setup(C1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-#GPIO.setup(C2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-#GPIO.setup(C3, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-#GPIO.setup(C4, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 
 def readLine(line, characters, data, start_y_pos):
